@@ -5,7 +5,8 @@ Implement a feature where a user can:
 1. Submit a form to create a new RSVP.
 2. Upon submission, update the list of the last 5 RSVPs.
 3. Clear the form fields.
-4. Use a Stimulus controller to show and hide a modal displaying the ID of the newly created RSVP.
+4. Show a bootstrap modal, displaying the ID of the newly created RSVP, which can be shown and hidden via the Stimulus controller modal_controller.js
+5. Write a system test to ensure RSVP creation works correctly (spec/system/rsvp_system_spec.rb)
 
 #### Steps
 
