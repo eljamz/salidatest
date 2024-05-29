@@ -21,17 +21,8 @@ class RsvpsController < ApplicationController
 
   # POST /rsvps or /rsvps.json
   def create
-    @rsvp = Rsvp.new(rsvp_params)
+    #todo
 
-    respond_to do |format|
-      if @rsvp.save
-        format.html { redirect_to rsvp_url(@rsvp), notice: "Rsvp was successfully created." }
-        format.json { render :show, status: :created, location: @rsvp }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @rsvp.errors, status: :unprocessable_entity }
-      end
-    end
   end
 
   # PATCH/PUT /rsvps/1 or /rsvps/1.json
