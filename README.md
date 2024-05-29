@@ -20,7 +20,7 @@ Implement a feature where a user can:
    Visit http://localhost:3000/events/new and create a new event
    
 2. **Event Show Page:**
-   - Visit http://localhost:3001/events/1 - this is where the project will be completed.
+   - Visit http://localhost:3000/events/1 - this is where the project will be completed.
    - We have a ul displaying the last 5 RSVPs, and a form to create new RSVP (unfinished).
      
 3. **Form Submission:**
