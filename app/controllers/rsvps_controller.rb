@@ -21,8 +21,20 @@ class RsvpsController < ApplicationController
 
   # POST /rsvps or /rsvps.json
   def create
-    #todo
-
+    @rsvp = Rsvp.new(rsvp_params)
+  
+    respond_to do |format|
+      if @rsvp.save
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace('rsvp_form', partial: 'rsvps/form', locals: { rsvp: Rsvp.new, event: @rsvp.event })
+        end
+        format.html { redirect_to @rsvp.event, notice: "Rsvp was successfully created.", flash: { new_rsvp_id: @rsvp.id } }
+        format.json { render :show, status: :created, location: @rsvp }
+      else
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: @rsvp.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   # PATCH/PUT /rsvps/1 or /rsvps/1.json

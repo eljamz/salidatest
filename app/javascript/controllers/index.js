@@ -1,6 +1,7 @@
 import { Application } from "@hotwired/stimulus"
-import { definitionsFromContext } from "@hotwired/stimulus-loading"
+import ModalController from "./modal_controller.js"
+import RsvpController from "./rsvp_controller.js"
 
 const application = Application.start()
-const context = require.context("controllers", true, /\.js$/)
-application.load(definitionsFromContext(context))
+application.register("modal", ModalController)
+application.register("rsvp", RsvpController)
