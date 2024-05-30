@@ -1,33 +1,45 @@
-<p style="color: green"><%= notice %></p>
+<div data-controller="rsvp">
+  <p style="color: green"><%= notice %></p>
 
-<div class="card">
-  <div class="card-body">
-    <h1 class="card-title">Event Name: <%= @event.name %></h1>
-  </div>
-</div>
-
-<div class="mt-4">
-  <h2>Last 5 RSVPs</h2>
-  <ul class="list-group" id="rsvps" data-target="rsvp.list">
-    <% @event.rsvps.order(created_at: :desc).limit(5).each do |rsvp| %>
-      <li class="list-group-item" id="<%= dom_id(rsvp) %>">
-        <%= rsvp.name %> (<%= rsvp.email %>)
-      </li>
-    <% end %>
-  </ul>
-</div>
-
-<div class="mt-4">
-  <h2>RSVP to this event</h2>
-  <%= turbo_frame_tag 'rsvp_form' do %>
-    <%= render 'rsvps/form', event: @event, rsvp: @rsvp %>
-  <% end %>
-</div>
-
-<div class="modal" tabindex="-1" role="dialog" data-controller="modal" data-new-rsvp-id="<%= flash[:new_rsvp_id] %>">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-body" data-target="modal.rsvpId"></div>
+  <div class="card">
+    <div class="card-body">
+      <h1 class="card-title">Event Name: <%= @event.name %></h1>
     </div>
   </div>
+
+  <div class="mt-4">
+    <h2>Last 5 RSVPs</h2>
+    <ul class="list-group" id="rsvps" data-rsvp-target="list">
+      <% @event.rsvps.order(created_at: :desc).limit(5).each do |rsvp| %>
+        <li class="list-group-item" id="<%= dom_id(rsvp) %>">
+          <%= rsvp.name %> (<%= rsvp.email %>)
+        </li>
+      <% end %>
+    </ul>
+  </div>
+
+  <div class="mt-4">
+    <h2>RSVP to this event</h2>
+    <%= turbo_frame_tag 'rsvp_form' do %>
+      <%= render 'rsvps/form', event: @event, rsvp: @rsvp %>
+    <% end %>
+  </div>
+
+
+  <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-controller="modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">New RSVP</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" data-modal-target="rsvpId"></div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div id="modal_action"></div>
 </div>

@@ -4,16 +4,19 @@ export default class extends Controller {
   static targets = [ "rsvpId" ]
 
   connect() {
-    this.modal = new bootstrap.Modal(this.element)
-  
-    const newRsvpId = this.element.dataset.newRsvpId
-    if (newRsvpId) {
-      this.modal.show()
-      this.rsvpIdTarget.textContent = `New RSVP ID: ${newRsvpId}`
-    }
+    document.addEventListener('rsvp:created', this.showModal.bind(this))
   }
 
   disconnect() {
-    this.modal.dispose()
+    document.removeEventListener('rsvp:created', this.showModal.bind(this))
+  }
+
+  showModal(event) {
+    const rsvpId = event.detail.id
+    console.log('showModal called with RSVP ID:', rsvpId)
+    this.rsvpIdTarget.textContent = `New RSVP ID: ${rsvpId}`
+    const modalElement = document.getElementById('myModal')
+    const modal = new bootstrap.Modal(modalElement)
+    modal.show()
   }
 }

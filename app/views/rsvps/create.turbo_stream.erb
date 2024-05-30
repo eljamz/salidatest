@@ -1,3 +1,9 @@
 <%= turbo_stream.prepend 'rsvps', partial: 'rsvps/rsvp', locals: { rsvp: @rsvp } %>
 <%= turbo_stream.remove dom_id(@last_rsvp) if @last_rsvp %>
 <%= turbo_stream.replace 'rsvp_form_contents', partial: 'rsvps/form', locals: { rsvp: Rsvp.new, event: @rsvp.event } %>
+<%= turbo_stream.append 'modal_action' do %>
+  <%= tag.div nil, id: 'new_rsvp_data', data: { rsvp_id: @rsvp.id } %>
+  <script>
+    document.dispatchEvent(new CustomEvent('rsvp:created', { detail: { id: '<%= @rsvp.id %>' } }));
+  </script>
+<% end %>
