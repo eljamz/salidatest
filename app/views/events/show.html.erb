@@ -1,54 +1,53 @@
-<p style="color: green"><%= notice %></p>
+<div data-controller="rsvp">
+  <div id="flash_messages">
+    <% if flash[:notice] %>
+      <p style="color: green"><%= flash[:notice] %></p>
+    <% end %>
 
-<div class="card">
-  <div class="card-body">
-    <h1 class="card-title">Event Name: <%= @event.name %></h1>
+    <% if flash[:alert] %>
+      <p style="color: red"><%= flash[:alert] %></p>
+    <% end %>
   </div>
-</div>
 
-<div class="mt-4">
-  <h2>Last 5 RSVPs</h2>
-  <ul class="list-group" id="rsvps">
-    <% @event.rsvps.order(created_at: :desc).limit(5).each do |rsvp| %>
-      <li class="list-group-item" id="<%= dom_id(rsvp) %>">
-        <%= rsvp.name %> (<%= rsvp.email %>)
-      </li>
+  <div class="card">
+    <div class="card-body">
+      <h1 class="card-title">Event Name: <%= @event.name %></h1>
+    </div>
+  </div>
+
+  <div class="mt-4">
+    <h2>Last 5 RSVPs</h2>
+    <ul class="list-group" id="rsvps" data-rsvp-target="list">
+      <% @event.rsvps.order(created_at: :desc).limit(5).each do |rsvp| %>
+        <li class="list-group-item" id="<%= dom_id(rsvp) %>">
+          <%= rsvp.name %> (<%= rsvp.email %>)
+        </li>
+      <% end %>
+    </ul>
+  </div>
+
+  <div class="mt-4">
+    <h2>RSVP to this event</h2>
+    <%= turbo_frame_tag 'rsvp_form' do %>
+      <%= render 'rsvps/form', event: @event, rsvp: @rsvp %>
     <% end %>
-  </ul>
-</div>
+  </div>
 
-<div class="mt-4">
-  <h2>RSVP to this event</h2>
-  <%= turbo_frame_tag 'rsvp_form' do %>
-    <%= form_with(model: [@event, @rsvp], local: false) do |form| %>
-      <div class="mb-3">
-        <%= form.label :name, "Full Name", class: "form-label" %>
-        <%= form.text_field :name, class: "form-control" %>
+
+  <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-controller="modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">New RSVP</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" data-modal-target="rsvpId"></div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
       </div>
-
-      <div class="mb-3">
-        <%= form.label :email, class: "form-label" %>
-        <%= form.email_field :email, class: "form-control" %>
-      </div>
-
-      <%= form.hidden_field :event_id, value: @event.id %>
-
-      <div class="mb-3">
-        <%= form.submit "RSVP", class: "btn btn-primary" %>
-      </div>
-    <% end %>
-  <% end %>
+    </div>
+  </div>
+  
+  <div id="modal_action"></div>
 </div>
-
-
-
-<!--
-
-<div class="mt-4">
-  <%= link_to "Edit this event", edit_event_path(@event) %> |
-  <%= link_to "Back to events", events_path %>
-
-  <%= button_to "Destroy this event", @event, method: :delete %>
-</div>
-
--->

@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
   resources :events do
-    resources :rsvps, only: [:create]
+    resources :rsvps
   end
+  resources :rsvps
   
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
