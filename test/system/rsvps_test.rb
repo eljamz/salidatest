@@ -52,4 +52,18 @@ class RsvpsTest < ApplicationSystemTestCase
 
     assert_text 'Test User (test@example.com)'
   end
+
+  test "should create rsvp and clear form" do
+    visit event_url(@event)
+  
+    fill_in "Full Name", with: 'Test User'
+    fill_in "Email", with: 'test@example.com'
+    click_on 'RSVP'
+  
+    assert_text 'Test User (test@example.com)'
+  
+    # Check that the form fields are cleared
+    assert_field 'Full Name', with: ''
+    assert_field 'Email', with: ''
+  end
 end
