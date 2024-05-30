@@ -19,8 +19,8 @@ class RsvpsControllerTest < ActionDispatch::IntegrationTest
     assert_difference("Rsvp.count") do
       post rsvps_url, params: { rsvp: { email: @rsvp.email, event_id: @rsvp.event_id, name: @rsvp.name } }
     end
-
-    assert_redirected_to rsvp_url(Rsvp.last)
+  
+    assert_redirected_to event_url(@rsvp.event)
   end
 
   test "should show rsvp" do

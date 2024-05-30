@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_29_060316) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_30_005046) do
   create_table "events", force: :cascade do |t|
     t.string "name"
     t.datetime "date"
@@ -27,5 +27,5 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_29_060316) do
     t.index ["event_id"], name: "index_rsvps_on_event_id"
   end
 
-  add_foreign_key "rsvps", "events"
+  add_foreign_key "rsvps", "events", on_delete: :cascade
 end
