@@ -13,6 +13,7 @@ export default class extends Controller {
 
   showModal(event) {
     const rsvpId = event.detail.id
+    console.log(event.detail)
     console.log('showModal called with RSVP ID:', rsvpId)
     this.rsvpIdTarget.textContent = `New RSVP ID: ${rsvpId}`
     const modalElement = document.getElementById('myModal')

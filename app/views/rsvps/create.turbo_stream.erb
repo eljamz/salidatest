@@ -4,6 +4,6 @@
 <%= turbo_stream.append 'modal_action' do %>
   <%= tag.div nil, id: 'new_rsvp_data', data: { rsvp_id: @rsvp.id } %>
   <script>
-    document.dispatchEvent(new CustomEvent('rsvp:created', { detail: { id: '<%= @rsvp.id %>' } }));
+    document.dispatchEvent(new CustomEvent('rsvp:created', { detail: { id: '<%= @rsvp.id %>', rsvp: '<%= @rsvp.to_json.html_safe %>' } }));
   </script>
 <% end %>
