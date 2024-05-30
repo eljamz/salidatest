@@ -1,5 +1,13 @@
 <div data-controller="rsvp">
-  <p style="color: green"><%= notice %></p>
+  <div id="flash_messages">
+    <% if flash[:notice] %>
+      <p style="color: green"><%= flash[:notice] %></p>
+    <% end %>
+
+    <% if flash[:alert] %>
+      <p style="color: red"><%= flash[:alert] %></p>
+    <% end %>
+  </div>
 
   <div class="card">
     <div class="card-body">

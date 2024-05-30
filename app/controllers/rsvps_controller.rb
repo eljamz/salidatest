@@ -23,7 +23,8 @@ class RsvpsController < ApplicationController
 
   # POST /rsvps or /rsvps.json
   def create
-    @rsvp = Rsvp.new(rsvp_params)
+    @event = Event.find(params[:rsvp][:event_id])
+    @rsvp = @event.rsvps.build(rsvp_params)
     respond_to do |format|
       if @rsvp.save
         @last_rsvp = @rsvp.event.rsvps.order(created_at: :desc).limit(6).last
@@ -31,6 +32,13 @@ class RsvpsController < ApplicationController
         format.html { redirect_to @rsvp.event, notice: "Rsvp was successfully created.", flash: { new_rsvp_id: @rsvp.id } }
         format.json { render :show, status: :created, location: @rsvp }
       else
+        flash.now[:alert] = @rsvp.errors.full_messages.to_sentence
+        format.turbo_stream do
+          render turbo_stream: [
+            turbo_stream.replace("rsvp_form", partial: "rsvps/form", locals: { rsvp: @rsvp, event: @event }),
+            turbo_stream.replace("flash_messages", partial: "rsvps/flash_messages")
+          ], status: :unprocessable_entity
+        end
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @rsvp.errors, status: :unprocessable_entity }
       end
