@@ -22,12 +22,10 @@ class RsvpsController < ApplicationController
   # POST /rsvps or /rsvps.json
   def create
     @rsvp = Rsvp.new(rsvp_params)
-  
     respond_to do |format|
       if @rsvp.save
-        format.turbo_stream do
-          render turbo_stream: turbo_stream.replace('rsvp_form', partial: 'rsvps/form', locals: { rsvp: Rsvp.new, event: @rsvp.event })
-        end
+        @last_rsvp = @rsvp.event.rsvps.order(created_at: :desc).limit(6).last
+        format.turbo_stream { render :create }
         format.html { redirect_to @rsvp.event, notice: "Rsvp was successfully created.", flash: { new_rsvp_id: @rsvp.id } }
         format.json { render :show, status: :created, location: @rsvp }
       else

@@ -1,17 +1,3 @@
-<div id="<%= dom_id rsvp %>">
-  <p>
-    <strong>Event:</strong>
-    <%= rsvp.event_id %>
-  </p>
-
-  <p>
-    <strong>Name:</strong>
-    <%= rsvp.name %>
-  </p>
-
-  <p>
-    <strong>Email:</strong>
-    <%= rsvp.email %>
-  </p>
-
-</div>
+<li class="list-group-item" id="<%= dom_id(rsvp) %>">
+  <%= rsvp.name %> (<%= rsvp.email %>)
+</li>

@@ -20,23 +20,7 @@
 <div class="mt-4">
   <h2>RSVP to this event</h2>
   <%= turbo_frame_tag 'rsvp_form' do %>
-    <%= form_with(model: [@event, @rsvp], local: false, data: { controller: "rsvp", action: "ajax:success->rsvp#submitForm" }) do |form| %>
-      <div class="mb-3">
-        <%= form.label :name, "Full Name", class: "form-label" %>
-        <%= form.text_field :name, class: "form-control" %>
-      </div>
-
-      <div class="mb-3">
-        <%= form.label :email, class: "form-label" %>
-        <%= form.email_field :email, class: "form-control" %>
-      </div>
-
-      <%= form.hidden_field :event_id, value: @event.id %>
-
-      <div class="mb-3">
-        <%= form.submit "RSVP", class: "btn btn-primary" %>
-      </div>
-    <% end %>
+    <%= render 'rsvps/form', event: @event, rsvp: @rsvp %>
   <% end %>
 </div>
 
