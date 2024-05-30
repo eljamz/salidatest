@@ -11,7 +11,7 @@ class RsvpsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get new" do
-    get new_rsvp_url
+    get new_rsvp_url(event_id: @rsvp.event_id)
     assert_response :success
   end
 

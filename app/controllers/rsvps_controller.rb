@@ -13,10 +13,12 @@ class RsvpsController < ApplicationController
   # GET /rsvps/new
   def new
     @rsvp = Rsvp.new
+    @event = Event.find(params[:event_id])
   end
 
   # GET /rsvps/1/edit
   def edit
+    @event = @rsvp.event
   end
 
   # POST /rsvps or /rsvps.json
